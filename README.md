@@ -17,5 +17,5 @@ model and year of a vehicle, enter a gas price, and estimate the cost of filling
 		if(this.model.contains(" ")){
 			String tmpModel = this.model.replaceAll(" ", "-");
 			this.webPageURL = String.format("https://www.edmunds.com/%s/%s/%s/features-specs/", 		this.make.toLowerCase(), tmpModel.toLowerCase(), this.year);
-		}
+	}
   ```

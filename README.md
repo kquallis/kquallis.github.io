@@ -44,3 +44,24 @@ model and year of a vehicle, enter a gas price, and estimate the cost of filling
 }
   ```
   
+  ```java
+  public static void populateModelYearTable(String make, String model) throws IOException, SQLException{
+		String year;
+		PreparedStatement insertStatement;
+
+		HashMap<String,ArrayList<String>> modYearMap = WebScraper.mapModelYears(make, model);
+		for(Entry<String, ArrayList<String>> entry: modYearMap.entrySet()) {
+			ArrayList<String> yearList = entry.getValue();
+
+			for(int i = 0; i < yearList.size(); i++ ){
+				year = yearList.get(i);
+				insertStatement = conn.prepareStatement("INSERT INTO makemodels.modelyear (make, model, modyear) VALUES(?,?,?)");
+				insertStatement.setString(1,make);
+				insertStatement.setString(2,model);
+				insertStatement.setString(3,year);
+				insertStatement.execute();
+			}
+		}			
+	}
+	````
+  

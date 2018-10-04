@@ -5,15 +5,6 @@ My name is Kadeem Quallis and I enjoy making thoughts a reality through code.
 ### Ga$timate
 This application estimates the cost of filling a gas tank. It gives you the ability to select the make,
 model and year of a vehicle, enter a gas price, and estimate the cost of filling the gas tank to a selected level. I developed this using Java, the jsoup HTML Parser and a MySQL database.
-
-```java
-	public Gastimate(String make, String model, String year){
-		setMake(make);
-		setModel(model);
-		setYear(year);
-		setWebPageURL();
-	}
-  ```
   
   ```java
 	public void setWebPageURL(){
@@ -64,5 +55,22 @@ model and year of a vehicle, enter a gas price, and estimate the cost of filling
 		}			
 	}
 
+```
+```java
+getEstimate.addActionListener(
+	new ActionListener() {
+		public void actionPerformed(ActionEvent e) {	
+			String [] levels = {(String)currLevel.getSelectedItem(),(String)toLevel.getSelectedItem()}; 
+			double price = Double.parseDouble(gasPrice.getText());
+
+			double [] doubLevels = convertLevels(levels);
+			double curr = doubLevels[0];
+			double to = doubLevels[1];
+
+			int estimate = vehicle.calcCostToLevel(curr, to, price); 
+			JOptionPane.showMessageDialog(frame, "Estimated Cost: $"+estimate);
+		}
+	});
+	
 ```
   

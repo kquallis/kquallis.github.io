@@ -9,9 +9,16 @@ model and year of a vehicle, enter a gas price, and estimate the cost of filling
   ```java
 	public void setWebPageURL(){
 		if(this.model.contains(" ")){
-		String tmpModel = this.model.replaceAll(" ", "-");
-		this.webPageURL = String.format("https://www.edmunds.com/%s/%s/%s/features-specs/",this.make.toLowerCase(),tmpModel.toLowerCase(), this.year);
+			String tmpModel = this.model.replaceAll(" ", "-");
+			this.webPageURL = String.format("https://www.edmunds.com/%s/%s/%s/features-specs/", this.make.toLowerCase(),
+					tmpModel.toLowerCase(), this.year);
+		}
+		else{
+			this.webPageURL = String.format("https://www.edmunds.com/%s/%s/%s/features-specs/", this.make.toLowerCase(),
+					this.model.toLowerCase(), this.year);
+		}
 	}
+	
 ```
   
 ```java

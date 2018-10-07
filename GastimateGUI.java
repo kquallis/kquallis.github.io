@@ -22,6 +22,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import com.kquallis.dbinteraction.DBInteraction;
+import com.kquallis.vehicle.Vehicle;
 import com.kquallis.webscraper.WebScraper;
 
 public class GastimateGUI {
@@ -30,7 +31,8 @@ public class GastimateGUI {
 	static Statement stmnt;
 	
 	JLabel kquallis = new JLabel("K.Quallis 2018");
-	Gastimate vehicle;
+	//Gastimate vehicle;
+	Vehicle vehicle;//added on 10/6/2018
 	
 	public GastimateGUI(){
 		try{
@@ -96,7 +98,7 @@ public class GastimateGUI {
 						String model = (String) models.getSelectedItem();
 						String year = (String) years.getSelectedItem();
 						
-						vehicle = new Gastimate(make, model, year);
+						vehicle = new Vehicle(make, model, year);//changed to use the Vehicle class - 10/6/2018
 						try{	
 							vehicle.setFuelTankCapacity( WebScraper.getTankCap( vehicle.getWebPageURL() ) );
 						}

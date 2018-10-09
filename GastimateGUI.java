@@ -1,18 +1,17 @@
-//8/15/2018
+//10/9/2018
 package com.kquallis.gastimate;
-
-import java.io.IOException;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -31,7 +30,7 @@ public class GastimateGUI {
 	static Statement stmnt;
 	
 	JLabel kquallis = new JLabel("K.Quallis 2018");
-	//Gastimate vehicle;
+	
 	Vehicle vehicle;//added on 10/6/2018
 	
 	public GastimateGUI(){
@@ -55,6 +54,9 @@ public class GastimateGUI {
 		models.setPrototypeDisplayValue("Mercedes-Benz");
 		
 		final JComboBox<String> years = new JComboBox<String>();
+		
+		ComboboxToolTipRenderer renderer = new ComboboxToolTipRenderer();
+		models.setRenderer(renderer);
 		
 		JLabel gasPriceLbl = new JLabel("Price:");
 		final JTextField gasPrice = new JTextField();
@@ -203,19 +205,33 @@ public class GastimateGUI {
 		
 		models.removeAllItems();//remove list items before executing query
 		try {
-			ps = conn.prepareStatement("SELECT MODEL FROM MAKEMODELS.MAKEMODEL WHERE MAKE= ?"
-				+ " ORDER BY MODEL;");
-			ps.setString(1,make);
-			modelList = ps.executeQuery();
-				while(modelList.next()){
-					String mod = modelList.getString("model");
-					models.addItem(mod);
-				}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+				ComboboxToolTipRenderer renderer = new ComboboxToolTipRenderer();//10/9/2018 - instance of tool tip renderer class
+				models.setRenderer(renderer);
+				ArrayList<String> toolTips = new ArrayList<>();
+				
+				ps = conn.prepareStatement("SELECT MODEL FROM MAKEMODELS.MAKEMODEL WHERE MAKE= ?"
+					+ " ORDER BY MODEL;");
+				ps.setString(1,make);
+				modelList = ps.executeQuery();
+					while(modelList.next()){
+						String mod = modelList.getString("model");
+						models.addItem(mod);
+					}
+					
+					int listCount = models.getItemCount();//10/9/2018
+					for(int i = 0; i < listCount; i++){
+						Object currEntry = models.getItemAt(i);	
+						
+						toolTips.add( (String)currEntry);
+					}
+					renderer.setTooltips(toolTips);//add tool tips to renderer of Model list
+					
+			} 
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
 	}
-	
+		
 	public void populateModYears(String make, String model, JComboBox<String> years){
 		PreparedStatement ps;
 		

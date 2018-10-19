@@ -1,4 +1,5 @@
-## Welcome!
+## Welcome
+![alt text](/storage/emulated/0/Download/0.jpeg?raw=true "Kadeem Quallis")
 
 My name is Kadeem Quallis and I enjoy making thoughts a reality through code.
 
